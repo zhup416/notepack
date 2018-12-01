@@ -1,0 +1,224 @@
+jquery 选择器
+    基本选择器
+    $('*')                   所有元素
+    $('#id')                  id选择器  
+    $('.class')                 class选择器
+    $('ele')                    标签选择器
+    $('selector1,selector2')     多类选择器
+    层级选择器
+    $('selector1 selector2')    后代选择器
+    $('parent>child')            直接选择器
+    $('prev+next')              下一个兄弟选择器
+    $('prev~sliblings')          后面兄弟选择器
+    基本筛选器
+    $('ele:first')              ele第一个选择器
+    $('ele:last')                ele最后一个选择器
+    $('ele:odd')                奇数
+    $('ele:even')                  偶数
+    $('ele:not(selector)')         除 之外选择器
+    $('ele:eq(index)')              ele第几个
+    内容选择器
+    $('ele:contains(text)')        选择 内容为text
+    $('ele:empty')                  内容为空的选择器
+    $('ele:has(selector)')          选择有selector的ele
+    $('ele:parent')                 ele的父级选择器
+    可见性
+    :hidden                         
+    :visible
+    属性
+    $('ele[attr]')
+    $('ele[attr=val]')
+    $('ele[attr!=val]')
+    $('ele[attr^=val]')
+    $('ele[attr%=val]')
+    子元素
+    $('ele:first-child')
+    $('ele:first-of-child')
+    $('ele:last-child')
+    $('ele:last-of-child')
+    $('ele:nth-child(index)')
+    表单选择器
+    $(':input')             选择type=‘’
+    $(':text')
+    $(':password')
+    $(':radio')
+    $(':checkbox')
+    $(':submit')
+    $(':reset')
+    $(':button')
+    $(':image')
+    $(':file')
+    $(':select')
+    对象属性选择器
+    $('enabled')
+    $('disabled')
+    $('checked')
+    $('selected')
+
+dom操作  
+    show();hidden() 可以代替display
+    this 不需要加引号
+   (1) 操作元素：属性，值，内容，样式;
+    属性
+    DOM：设置ele.setAttribute('属性','属性值')； 获取 ele.getAttribute('属性')
+    jq:设置 $('ele').attr('属性','值');获取 $('ele').attr('title');
+    内容
+    DOM:ele.innerHTML = "xxx"; ele 植入内容（包括内容和标签）
+        var n = ele.innerHTML;读取内容
+        ele.innerText;获取ele的文本内容；
+        var n = ele.innerText ;读取ele文本的内容；
+    jq:$('ele').html('xxx'); 写 会把原本的内容替换掉
+        $('ele').html() 读
+        $('ele').htnl("") 设置为空
+        $('ele').text('xxx') 设置文本不会编译标签，把内容当做文本插入；
+        var n = $("ele").text() 读取文本
+
+    值
+        DOM
+        input.value = "xxx"; 赋值
+        var n =input.value   读取值
+        jq
+        $('input').val("xxx");赋值；
+        $('input').val()   读取值
+    
+    属性操作
+        DOM
+        div.style.color="#f40";  设置div的颜色样式
+        var col = div.style.color; 获取颜色样式
+        div.className = "box";    设置class属性
+        var n = div.className       获取class属性
+        ele.setAttribute('key','val')   设置属性
+        ele.getAttribute('key')     获取属性
+        jq
+        $('div').css('color','#f40')
+        $('div').css('color')
+        $('div').addClass("box");  增加值为box的class属性
+        $('div').removeClass('box');
+        $('div').hasClass('box');//返回的是true、false
+        $('div').toggleClass('box');存在就删除，不存在就添加
+        $('div').attr("key",'val'); 设置属性；
+        $('div').attr("key"）获取key的属性值
+        
+
+    遍历元素
+    DOM
+        div.parentNode; 
+        div.childNode;
+        div.nextSibling;
+        div.prevSibling;
+    jquery
+        $('div').parent();  获取父元素
+        $('div').children(); 获取子元素
+        $('div').children('selector'); 获取selector子元素
+        $('div').find('selector'); 查找daselector 元素
+        $('div').next();    下一兄弟元素
+        $('div').nextAll();     后面的所有兄弟元素
+        $('div').prev();       前一兄弟元素
+        $('div').prevAll();     前面的所有兄弟元素
+        $('div').siblings();    多有的兄弟元素
+
+    增删改查
+        DOM
+            var p= document.createElement('p');
+            p.innerHTML = '';
+            p.onclick = function(){}
+            div.appendChild(p);
+        jquery 8个方法
+            var p = $('<p><a>11</a></p>');
+            p.click;
+            $('div').append(p);
+            $('div').append('<p><a>11</a></p>'); 插在最后一个位
+            $('div').prepend('<p><a>11</a></p>'); 插在最前一位
+        删除 
+            DOM
+                div.removeChild('p');
+                p.parentNode.removeChild('p')
+            jquery
+                $('p').remove();
+                $('div').empty()  === $('div').html('' )
+        替换
+            DOM
+                parent.replaceChild(new,old);
+            jquery
+                $(new).replaceAll(old)    返回新的元素
+                $(oid).replaceWith(new)  返回替换的元素
+
+        克隆
+        DOM
+            var copy = div.cloneNode();
+        jquery
+            var copy = $('div').clone()
+    事件处理
+        $('p').bind(click,function(){}) 事件绑定
+        $('p').unbind(click,function(){}) 取消事件绑定
+        $('p').one(click,function(){}) 只执行一次的事件绑定
+        后面简化成$('p').click(function(){})
+        这些都存在缺陷 原先存在DOM树的可以实现事件绑定 后面添加的无法实现事件绑定
+        
+        事件监听代理 利用事件冒泡机制
+        $('父级元素').delegate("button","click",function(e){}) 对后续生成的元素实现事件绑定;避免多次绑定事件
+            e.target事件源 是<button></button>
+        类似 delegate的事件绑定--> $('父级元素').on('click','button',function(){})
+        $('事件源').on('click',function(){})
+       
+       使用js去出发指定事件
+        trigger触发器
+        $('').trigger('事件类型')
+        $('').click();
+
+
+        使用jQuery对象
+            $('div').length; 
+            $('div').get(); 获取第几位
+            $('div')[];     属性
+            $('div').each(function(){})遍历每一个元素，绑定事件
+            $('div').index(this) 获取
+
+
+动画
+隐藏显示
+    $('div').show();
+    $('div').hide();    参数 slow fast normal 数值
+    $('div').toggle();
+折叠展开收起
+    $('div').slideup(); 收起
+    $('div').slidedown(); 
+    $('div').slideToggle();
+淡入淡出
+    $('div').fadeIn();
+    $('div').fadeOut(‘参数’，函数);
+    $('div').fadeToggle();
+万能动画函数 使用定时器修改指定的属性
+    $('div').animate({}，3000，func);
+
+
+css方法
+    定位offset / position
+    $().offset()  相对视口（docu）的位置
+    $().position() 若有定位 则值为设置的top和left； 
+    $().height();
+    $().width()'
+    $().innerHeight()  没有参数 获取的值时content+padding；  有参数时 内容区高度=参数-padding
+    $().outerHeight()  没有参数 获取的值是border+content+padding  有参数时 内容区高度=参数-padding-border
+
+文档处理
+    父子级
+    在后面添加
+    a.appendChild(b) === $(a).append(b) ===b.appendTo.a
+    b.appendTo.a  
+    在前面加 
+    $(a).preppend(b) ===b.preppendTo.a
+    同级
+    $(a).after(b) ===b.inserAfter.a  在a后面插入b；
+
+工具栏
+    $.parseHTML('便签')   转化成标签
+    $.merge([],[]) 合并数组 类数组  将后面的数组添加到前面的数组，属于浅度克隆 
+    $.extend({},{})  拼接对象 ，将后面的对象添加到前面的  合并对象
+            $.extend(true，{},obj) 深度克隆
+
+
+
+事件
+    页面载入
+        .ready   
